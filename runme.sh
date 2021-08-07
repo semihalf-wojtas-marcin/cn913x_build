@@ -56,16 +56,19 @@ case "${BOARD_CONFIG}" in
 			 echo "Please define a correct number of CPs [1,2,3]"
 			 exit -1
 		fi
+		TFA_CONFIG=cn913x_cex7_eval
 	;;
 	2)
 		CP_NUM=1
 		DTB_UBOOT=cn9130-cf-base
 		DTB_KERNEL=cn9130-cf-base
+		TFA_CONFIG=t9130
 	;;
 	3)
 		CP_NUM=1
 		DTB_UBOOT=cn9130-cf-pro
 		DTB_KERNEL=cn9130-cf-pro
+		TFA_CONFIG=t9130
 	;;
 
 
@@ -242,7 +245,7 @@ fi
 echo "Building arm-trusted-firmware"
 cd $ROOTDIR/build/arm-trusted-firmware
 export SCP_BL2=$ROOTDIR/binaries/atf/mrvl_scp_bl2.img
-make -j${PARALLEL} USE_COHERENT_MEM=0 LOG_LEVEL=20 PLAT=t9130 MV_DDR_PATH=$ROOTDIR/build/mv-ddr-marvell CP_NUM=$CP_NUM all fip
+make -j${PARALLEL} USE_COHERENT_MEM=0 LOG_LEVEL=20 PLAT=$TFA_CONFIG MV_DDR_PATH=$ROOTDIR/build/mv-ddr-marvell CP_NUM=$CP_NUM all fip
 
 
 echo "Building the kernel"
